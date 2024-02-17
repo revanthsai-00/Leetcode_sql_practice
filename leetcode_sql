@@ -1,0 +1,16 @@
+SQL:1211
+SELECT 
+   query_name, ROUND(AVG(rating/position), 2) AS quality,
+   ROUND(
+     SUM(IF(rating < 3, 1, 0))/COUNT(rating)*100,2) AS poor_query_percentage
+FROM Queries
+WHERE query_name IS NOT NULL
+GROUP BY query_name;
+
+sql:1174
+select round(sum(case when min_order_date=min_customer_pref_delivery_date 
+then 1 else 0 end)*100/count(*),2) as immediate_percentage
+ from (SELECT MIN(order_date) AS min_order_date, MIN(customer_pref_delivery_date) AS min_customer_pref_delivery_date 
+    FROM Delivery 
+    GROUP BY customer_id) AS min_delivery_table;
+ 
