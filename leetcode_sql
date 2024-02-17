@@ -13,4 +13,22 @@ then 1 else 0 end)*100/count(*),2) as immediate_percentage
  from (SELECT MIN(order_date) AS min_order_date, MIN(customer_pref_delivery_date) AS min_customer_pref_delivery_date 
     FROM Delivery 
     GROUP BY customer_id) AS min_delivery_table;
+sql:550
+SELECT
+  ROUND(
+    COUNT(A1.player_id)
+    / (SELECT COUNT(DISTINCT A3.player_id) FROM Activity A3)
+  , 2) AS fraction
+FROM
+  Activity A1
+WHERE
+  (A1.player_id, DATE_SUB(A1.event_date, INTERVAL 1 DAY)) IN (
+    SELECT
+      A2.player_id,
+      MIN(A2.event_date)
+    FROM
+      Activity A2
+    GROUP BY
+      A2.player_id
+  );
  
