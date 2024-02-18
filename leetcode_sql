@@ -50,3 +50,9 @@ sql:1045 Customers Who Bought All Products
 select  customer_id from Customer group by customer_id having 
  count( distinct  product_key)=(select  distinct count( product_key) 
 from Product )
+
+1731 .The Number of Employees Which Report to Each Employee
+select e.employee_id,e.name,count(*) as reports_count
+,round(avg(ee.age))average_age from Employees e 
+join Employees ee on e.employee_id=ee.reports_to
+group by e.employee_id order by e.employee_id
