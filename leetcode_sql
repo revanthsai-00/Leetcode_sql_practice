@@ -45,3 +45,8 @@ GROUP BY num
 HAVING COUNT(*) = 1);
 596: Classes More Than 5 Students
 SELECT class FROM Courses GROUP BY class HAVING count(student) >= 5;
+
+sql:1045 Customers Who Bought All Products
+select  customer_id from Customer group by customer_id having 
+ count( distinct  product_key)=(select  distinct count( product_key) 
+from Product )
