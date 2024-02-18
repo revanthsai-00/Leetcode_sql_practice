@@ -56,3 +56,14 @@ select e.employee_id,e.name,count(*) as reports_count
 ,round(avg(ee.age))average_age from Employees e 
 join Employees ee on e.employee_id=ee.reports_to
 group by e.employee_id order by e.employee_id
+
+1789. Primary Department for Each Employee
+SELECT employee_id, department_id
+FROM Employee
+WHERE primary_flag = 'Y' OR employee_id in (
+    SELECT employee_id
+    FROM Employee
+    GROUP BY employee_id
+    HAVING COUNT(*) = 1
+)
+GROUP BY employee_id
